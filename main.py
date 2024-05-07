@@ -11,8 +11,8 @@ with open(file_name, 'r') as csvfile:
 
   for line in reader:
     continent = line['continent']
-    year = line['year']
-    population = line['population']
+    year = int(line['year'])
+    population = int(line['population'])
 
     if continent not in population_per_continent:
       population_per_continent[continent] = {'population': [], 'years': []}
@@ -20,16 +20,16 @@ with open(file_name, 'r') as csvfile:
     population_per_continent[continent]['population'].append(population)
     population_per_continent[continent]['years'].append(year)
 
-print(population_per_continent)
-
-plt.plot([2000, 2010, 2020, 2030], [100, 200, 300, 400],
-         label="Europe",
-         marker="x")
+for continent in population_per_continent:
+  years = population_per_continent[continent]['years']
+  population = population_per_continent[continent]['population']
+  plt.plot(years, population, label=continent, marker="o", alpha=0.6)
 
 plt.title("Internet Population Per Continent")
 plt.xlabel("Year")
-plt.ylabel("Internet Users")
+plt.ylabel("Internet Users (in billions)")
 plt.grid(True)
 plt.legend()
 
 plt.show()
+
